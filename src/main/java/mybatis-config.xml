@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db.properties" />
+	
+	<typeAliases>
+		<typeAlias type="kr.ac.kopo.movie.vo.MovieVO" alias="movieVO"/>
+	</typeAliases>
+
+	<environments default="db1">
+		<environment id="db1">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url1}" />
+				<property name="username" value="${jdbc.username1}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+		<environment id="db2">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url2}" />
+				<property name="username" value="${jdbc.username2}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+		<environment id="db3">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url3}" />
+				<property name="username" value="${jdbc.username3}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="common/db/movieMapper.xml" />
+	</mappers>
+</configuration>

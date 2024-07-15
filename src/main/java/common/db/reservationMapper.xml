@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reservation.dao.ReservationDAO">
+
+	<resultMap type="reservationVO" id="reservationMap">
+		<result column="no" property="no" />
+		<result column="member_id" property="memberId" />
+        <result column="movie_no" property="movieNo" />
+        <result column="seat_name" property="seatName" />
+        <result column="schedule_no" property="scheduleNo" />
+		<result column="headcount" property="headcount" />
+		<result column="payment" property="payment" />
+		<result column="reg_date" property="regDate" />
+		<association property="movie" javaType="movieVO">
+            <id column="movie_no" property="no" />
+            <result column="title" property="title" />
+        </association>
+        <association property="schedule" javaType="scheduleVO">
+            <id column="schedule_no" property="no" />
+            <result column="theater_name" property="theaterName" />
+            <result column="screen_time" property="screenTime" />
+        </association>
+	</resultMap>
+
+	<insert id="insertToDB1" parameterType="reservationVO">
+		insert into t_reservation(no,member_id,movie_no,seat_name,schedule_no,headcount,payment)
+		values(T_RESERVATION_SEQ.nextval,#{memberId}, #{movieNo}, #{seatName},#{scheduleNo},#{headcount},#{payment})
+	</insert>
+	
+	<insert id="insertToDB2" parameterType="reservationVO">
+		insert into tbl_reservation(reserve_no,member_id,movie_no,schedule_no,seat_name)
+		values(SEQ_RESERVE_NO.nextval,#{memberId}, #{movieNo},#{scheduleNo},#{seatName})
+	</insert>
+	
+	<insert id="insertToDB3" parameterType="reservationVO">
+		insert into reservation(no,user_id,movie_no,schedule_no,seat_name)
+		values(SEAT_SEQ.nextval,#{memberId}, #{movieNo},#{scheduleNo},#{seatName})
+	</insert>
+	
+	<select id="selectListByMemberId" resultMap="reservationMap" parameterType="string">
+		select r.no              as no,
+           	   r.seat_name     	 as seat_name,
+	           r.headcount   	 as headcount,
+	           r.payment  	 	 as payment,
+	           r.reg_date		 as reg_date,
+	           m.title           as title,
+	           s.theater_name    as theater_name,
+	           s.screen_time     as screen_time
+	      from t_reservation r
+	           join t_movie m on m.no = r.movie_no
+	           join t_schedule s on s.no = r.schedule_no
+	     where r.member_id = #{memberId}
+	     order by reg_date desc
+	</select>
+	
+</mapper>

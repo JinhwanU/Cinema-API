@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie.dao.MovieDAO">
+
+	<resultMap type="movieVO" id="movieMap">
+		<result column="open_date" property="openDate"/>
+		<result column="poster_url" property="posterUrl"/>
+		<result column="kmdb_url" property="kmdbUrl"/>
+		<result column="no" property="no"/>
+		<result column="movie_no" property="no"/>
+		<result column="movie_name" property="title"/>
+		<result column="title" property="title"/>
+		<result column="running_time" property="runtime"/>
+		<result column="runtime" property="runtime"/>
+		<result column="grade" property="rating"/>
+		<result column="rating" property="rating"/>
+		
+	</resultMap>
+
+	<!-- 전체 영화리스트 조회 -->
+	<select id="selectAllFromDB1" resultMap="movieMap">
+		select no, title, runtime, poster_url, kmdb_url, rating ,to_char(open_date, 'yyyy-mm-dd') open_date
+		  from t_movie
+		 where status = 'T'
+		 order by no desc
+	</select>
+	
+	<select id="selectAllFromDB2" resultMap="movieMap">
+	select movie_no, movie_name, running_time, to_char(open_date, 'yyyy-mm-dd') open_date
+	  from TBL_MOVIE
+	  
+	</select>
+
+	<select id="selectAllFromDB3" resultMap="movieMap">
+	select no, title, runtime, to_char(open_date, 'yyyy-mm-dd') open_date, grade
+	  from movie
+	</select>
+ 	
+	<!-- 영화 번호로 조회 -->
+	<select id="selectByNo" resultMap="movieMap" parameterType="movieVO">
+		select no, title, runtime, to_char(open_date, 'yyyy-mm-dd') open_date
+		  from C##EDU_USER.t_movie
+		 where status = 1
+		   and no = #{no}
+	</select>
+
+</mapper>

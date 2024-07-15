@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seat.dao.SeatDAO">
+	
+	<update id="updateAvailableToDB1" parameterType="seatVO">
+		update t_seat
+		   set available = 0
+		 where no = #{no}
+		   and available = 1
+	</update>
+	
+	<update id="updateAvailableToDB2" parameterType="seatVO">
+		update tbl_seat
+		   set available = 0
+		 where seat_no = #{no}
+		   and available = 1
+	</update>
+	
+	<update id="updateAvailableToDB3" parameterType="seatVO">
+		update seat
+		   set able = 0
+		 where no = #{no}
+		   and able = 1
+	</update>
+	
+</mapper>
